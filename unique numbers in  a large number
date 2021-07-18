@@ -1,0 +1,62 @@
+/*Problem: Given a large number (n>0). You need to print the unique digits
+present in the number n, and the largest number possible using these
+unique digits. (You are not allowed to use array.)*/
+
+
+import java.util.Scanner;
+public class uniqueDigitsOfLargeNumber 
+{
+
+	public static void main(String[] args) 
+	{
+		Scanner in=new Scanner (System.in);
+		
+		System.out.println("Enter the number You want for procedure(Except 0) :");
+		String num=in.nextLine();
+		
+		if(num.equals("0"))
+		System.out.println("Sorry ! you cannot give Zero as input...Give another number.");
+		
+		else
+		{
+			
+			String str="";
+			System.out.println("The unique digits are:");
+			
+			
+			for (int i=0;i<=9;i++)
+			{
+				
+				int f=1;
+				for (int j=0;j<num.length();j++)
+				{
+					
+					char ch=num.charAt(j);
+					if(f==1)
+					{
+						
+						if(((int)ch-48)==i)
+						{
+						   System.out.print(ch+",");
+						   str=ch+str;
+						   f=0;
+						}
+			 		}
+					
+					
+				}
+				
+			}
+			System.out.println();
+			long k=Long.parseLong(str);
+			
+			System.out.println("The maximum number out of folloing digits is :"+k);
+			
+		}
+		
+		in.close();
+		
+
+	}
+
+}
