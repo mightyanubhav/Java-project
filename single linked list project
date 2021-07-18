@@ -1,0 +1,390 @@
+package singlelylinkedlist;
+import java.util.InputMismatchException;
+
+
+
+/*This is the program to demonstrate all applications of singly linked list...*/
+
+
+class Node
+{
+	protected int regd_no;
+	protected float  mark;
+	protected Node next;
+	
+	Node(int r, float mar)
+	{
+		this .regd_no = r;
+		this .mark = mar;
+	}
+}
+
+public class Pg_2
+{
+	
+	
+	public static Node create(Node start)
+	{
+		
+		System.out.print("Enter the Regd_no : ");
+		int reg = getAnInteger();
+		
+		System.out.print("Enter the Marks  :  ");
+		float mark = getADecimal();
+		start = new Node(reg,mark);
+		
+		return start;
+		
+	}
+	
+	public static void display(Node start)
+	{
+		if(start == null)
+		{
+			System.out.println(" The list is empty .");
+			return;
+		}
+		else
+		{
+			int i = 0 ;
+			Node t = start;
+			System.out.println("\n|---------------------------------------------------------------------|");
+			System.out.println("|**-----------------------------------------------------------------**|");
+			System.out.println("Position : \t\t reg_no :\t\t marks :  ");
+			while(t != null)
+			{							
+				System.out.println("\t" + ++i + "\t\t\t" + t.regd_no+ "       \t\t" + t.mark);				
+				t=t.next;
+			}
+			System.out.println("\n|---------------------------------------------------------------------|\n");
+		}
+	}
+//	-----------------------------------insertion-----------------------------------------------------------------------------
+	
+	public static Node insertInFront(Node start)
+	{
+		if(start == null)
+		{
+			System.out.println("Empty list.");
+			return start;
+		}
+		else
+		{
+			Node obj =create(start);
+			obj.next = start;
+			System.out.println("The node is being sucessfully inserted. ");
+			return obj;
+			
+		}
+		
+	}
+	
+	public static void insertInEnd(Node start)
+	{
+		if(start == null)
+		{
+			System.out.println("Empty list.");
+			return;
+		}
+		else
+		{
+			while(start.next != null)
+				start = start.next;			
+			
+			Node obj = create(start);
+			start.next=obj;	
+			System.out.println("The node is being sucessfully inserted. ");
+		}
+	}
+	
+	public static void insertAtPos(Node start)
+	{
+		if(start == null)
+		{
+			System.out.println("Empty list.");
+			return;
+		}
+		else
+		{
+			System.out.print("Enter the position at which new node will be inserted :");
+			int pos = getAnInteger();
+			int c = 1;
+			
+			System.out.println();
+			while(start != null && c < pos)
+			{
+				start = start.next;
+				c++;
+			}
+			if(start == null)
+			{
+				System.out.println("The position is not present in the linked list.");
+				return;
+			}
+			else
+			{
+				Node obj = create(start);
+				obj.next = start.next;
+				start.next = obj;
+				
+				System.out.println("The node is being sucessfully inserted. ");
+				
+			}
+			
+		}				
+		
+	}
+//	-------------------------------------------------deletion-------------------------------------------------------------------
+	
+	public static Node deleteInFront(Node start)
+	{
+		if(start == null)
+		{
+			System.out.println("The list is empty .");
+			return start;
+		}
+		else
+		{
+			start = start.next;
+			System.out.println("The front node is deleted sucessfully.");
+			return start;
+		}
+	}
+	
+	public static void deleteAtEnd(Node start)
+	{
+		if(start == null)
+		{
+			System.out.println("The list is empty .");
+			return ;
+		}
+		else
+		{
+			Node prev = null;
+			while(start.next != null)
+			{
+				prev = start;
+				start=start.next;
+			}
+			prev.next = null;
+			System.out.println("The node has been sucessfully removed .");
+		}
+	}
+	public static void deleteAtPos(Node start)
+	{
+		if(start == null)
+		{
+			System.out.println("The list is empty .");
+			return;
+		}
+		else
+		{
+			System.out.print("Enter the position you want to delete.");
+			int x =getAnInteger();
+			int c = 1; Node prev = null;
+			
+			System.out.println();
+			while(start != null && c < x)
+			{
+				prev = start;
+				start = start.next;
+				c++;
+			}
+			if(start == null)
+			{
+				System.out.println("The position is not present in the linked list.");
+				return;
+			}
+			else
+			{
+				prev.next= start.next;
+				start.next = null;
+				System.out.println();
+				System.out.println("The node is being sucessfully deleted. ");				
+			}
+			
+		}
+		
+	}
+	
+//	---------------------------------------------reversal---------------------------------------------------------------------
+	
+	public static Node reverseList(Node start)   
+	{
+		if(start == null)
+		{
+			System.out.println("The list is empty .");
+			return start;
+		}
+		else if(start.next == null)
+		{
+			System.out.println("The list contains only one element .");
+			return start;
+		}
+		else
+		{
+			
+			Node curr = start;
+			Node prev = null;
+			Node next = null;
+				
+			while(curr!=null)
+			{
+				next = curr.next;
+				curr.next=prev;
+				prev=curr;
+				curr=next;
+			}
+			start=prev;
+			
+			return start;
+		}
+	}
+//	-------------------------------------------------  sorting  ------------------------------------------------------------------------
+	
+	public static void sort(Node start)
+	{
+		for(Node i=start;i.next!=null;i=i.next)
+		{
+			for(Node j=i.next;j!=null;j=j.next)
+			{
+				if(j.mark < i.mark)
+				{
+					float t=i.mark;
+					int t2 = i.regd_no;
+					
+					i.mark=j.mark;
+					i.regd_no=j.regd_no;
+					
+					j.mark=t;
+					j.regd_no=t2;
+				}
+			}
+		}
+		System.out.println("The list has been sorted according to marks .");
+	}
+//	----------------------------------------------------search the list------------------------------------------------------------
+	
+	public static void search(Node start)
+	{
+		boolean flag = false;
+		
+		System.out.print("enter the reg_no:");
+		int key = getAnInteger();
+		while(start!=null)
+		{
+			if(start.regd_no==key)
+			{
+				flag =true;
+				break;
+			}
+			start=start.next;
+		}
+		if(flag == true )
+			System.out.println("The data is present in the list ");
+		else
+			System.out.println("The key is not there .");
+	}
+					
+//	------------------------------------------------main method--------------------------------------------------------------
+	public static void main(String[] args)
+	{
+		Node start = null;
+		System.out.println("\t\tSingle linked list program for student's information.\n");
+				
+				
+		while(true)
+		{
+			System.out.println("\t\t\t\t  ||MENU||    ");
+			System.out.println();
+			System.out.println("1.Creation \t\t 2.Insert at end \t\t 3.Insert at beginning.");
+			System.out.println("4.Insert at position\t 5.Delete at beginning \t\t 6.Delete at position");
+			System.out.println("7.Delete at end \t 8.Display the list \t\t 9.Reverse list.");
+			System.out.println("10.Sort the list \t 11.Search the list \t\t 0.Exit Program.");
+			System.out.print("Enter your choice :");
+			switch(getAnInteger())
+			{
+			case 0:
+				System.out.println("The program has been terminated.");
+				System.exit(0);
+			case 1:
+				start = create(start);
+				System.out.println("The node has been created.");
+				break;
+			case 2:
+				insertInEnd(start);
+				break;
+			case 3:
+				start=insertInFront(start);
+				break;
+			case 4:
+				insertAtPos(start);
+				break;
+			case 5:
+				start = deleteInFront(start);
+				break;
+			case 6:
+				deleteAtPos(start);
+				break;
+			case 7:
+				deleteAtEnd(start);
+				break;
+			case 8:
+				display(start);
+				break;
+			case 9:
+				start = reverseList(start);
+				System.out.println("The list is reversed.");
+				break;
+			case 10:
+				sort(start);
+				break;
+			case 11:
+				search(start);
+				break;
+			default:
+				System.out.println("The input doesn't match...");			
+			}
+			System.out.println("\n");
+			
+		}
+		
+		
+	}
+	
+	
+//=====================================input readers===============================================
+	static java.util.Scanner in = new java.util.Scanner(System.in);
+	
+	public static int getAnInteger()
+	{
+		while(true)
+		{
+			try
+			{
+				return in.nextInt();
+			}
+			catch(InputMismatchException e)
+			{
+				in.next();
+				System.out.print("Not an integer!! Input again : ");				
+			}
+		}
+	}
+	public static float getADecimal()
+	{
+		while(true)
+		{
+			try
+			{
+				return in.nextFloat();
+			}
+			catch(InputMismatchException e)
+			{
+				in.next();
+				System.out.print("Not a decimal!! Input again : ");
+			}
+		}
+	}
+	
+}
